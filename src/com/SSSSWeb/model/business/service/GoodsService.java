@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.SSSSWeb.model.business.dao.GoodsDAO;
-import com.SSSSWeb.model.domain.GOODS_INF;
+import com.SSSSWeb.model.domain.Goods;
 import com.SSSSWeb.model.domain.GoodsDetial;
 import com.SSSSWeb.model.domain.Supplier;
 

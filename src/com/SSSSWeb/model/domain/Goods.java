@@ -9,8 +9,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="goods_inf")
-public class GOODS_INF {
-	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+public class Goods {
+	@Id 
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	private String code;
 	private String chn_name; 
