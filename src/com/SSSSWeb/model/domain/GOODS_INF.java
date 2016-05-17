@@ -8,9 +8,10 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name="goods_inf")
+@Table(name="GOODS_INF")
 public class GOODS_INF {
-	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Id 
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	private String code;
 	private String chn_name; 

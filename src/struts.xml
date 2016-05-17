@@ -69,6 +69,10 @@
      		<result>/detial.jsp</result>
      	</action>
      	
+     	<action name="getAllAc" class="AccessoryManagerAction" method="getAllAc">
+     		<result>/selectAllAccessory.jsp</result>
+     	</action>
+     	
      	<!-- Orders -->
      	<action name="ishopCart" class="ishopCart">
      		<result>/detial.jsp</result>

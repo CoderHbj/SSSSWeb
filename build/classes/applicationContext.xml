@@ -113,6 +113,10 @@
 		<property name="gs" ref="goodsService"></property>
 	</bean>
 	
+	<bean id="AccessoryManagerAction" class="com.SSSSWeb.control.AccessoryManagerAction">
+		<property name="service" ref="goodsService"></property>
+	</bean>
+	
 	<!-- Orders -->
 	<bean id="ordersDAO" class="com.SSSSWeb.model.business.dao.OrdersDAO">
 		<property name="sf" ref="sessionFactory"></property>
