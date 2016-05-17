@@ -6,13 +6,15 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.SSSSWeb.model.business.dao.GoodsDAO;
-import com.SSSSWeb.model.domain.Goods;
+import com.SSSSWeb.model.domain.GOODS_INF;
 import com.SSSSWeb.model.domain.GoodsDetial;
 import com.SSSSWeb.model.domain.Supplier;
 
 
 public class GoodsService {
 
+	private static int DONE = 1;
+	private static int FAIL = 0;
 	private GoodsDAO goodsDAO;
 
 	public GoodsDAO getGoodsDAO() {
@@ -79,4 +81,26 @@ public class GoodsService {
 		return reslist;
 	}
 	
+	//查询所有配件
+	@Transactional
+	public ArrayList<GOODS_INF> getAllAc(){
+		return goodsDAO.getAllAccessory();
+	}
+	
+	//新增配件
+	@Transactional
+	public void addAc(GOODS_INF goods) {
+		goodsDAO.insertAccessory(goods);
+	}
+	
+	//删除配件
+	public void deleteAc(int ID){
+		goodsDAO.deleteAccessory(ID);
+	}
+	
+	//修改配件
+	@Transactional
+	public void modifyAc(GOODS_INF goods) {
+		goodsDAO.updateAccessory(goods);
+	}
 }
