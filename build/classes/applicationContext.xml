@@ -103,8 +103,12 @@
 	<bean id="goodsDAO" class="com.SSSSWeb.model.business.dao.GoodsDAO">
 		<property name="sf" ref="sessionFactory"></property>
 	</bean>
+	<bean id="stockDAO" class="com.SSSSWeb.model.business.dao.StockDAO">
+		<property name="sf" ref="sessionFactory"></property>
+	</bean>
 	<bean id="goodsService" class="com.SSSSWeb.model.business.service.GoodsService">
 		<property name="goodsDAO" ref="goodsDAO"></property>
+		<property name="stockDAO" ref="stockDAO"></property>
 	</bean>
 	<bean id="sGoodsA" class="com.SSSSWeb.control.SelectGoodsAction">
 		<property name="gs" ref="goodsService"></property>
