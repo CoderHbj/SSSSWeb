@@ -56,10 +56,14 @@ public class GoodsDAO {
 	}
 
 	//查询所有配件
-	public ArrayList<GOODS_INF> getAllAccessory() {
+	public ArrayList<GoodsDetial> SelectAllDetialGoods(int pageSize, int pageNow) {
 		Session session = sf.openSession();
-		String hql = "select code,chn_name,eng_name,standard,place,brand,provider,price from GOODS_INF where type=2";
-		Query query = session.createQuery(hql);
+		String hql = "select g.id,g.code,g.chn_name,g.eng_name,g.type,g.color,g.standard,g.displacement,g.place,g.brand,g.provider,g.price,g.text,s.quantity"
+				+ " from GOODS_INF g,STOCK_INF s  "
+				+ " where type='2'" 
+				+ " and g.id=s.goods_ID "
+				+ "limit "+(pageNow*pageSize-pageSize)+","+pageSize;
+		Query query = session.createSQLQuery(hql);
 		ArrayList resultList = (ArrayList) query.list();
 		session.close();
 		return resultList;
@@ -70,7 +74,7 @@ public class GoodsDAO {
 		Session session = sf.openSession();
 		String hql = "select code,chn_name,eng_name,standard,place,brand,provider,price "
 					+"from GOODS_INF "
-					+"where type=2";
+					+"where type='2'";
 		Query query = session.createQuery(hql);
 		ArrayList resultList = (ArrayList) query.list();
 		session.close();
@@ -79,15 +83,20 @@ public class GoodsDAO {
 	
 	//新增配件
 	public int insertAccessory(GOODS_INF goods){
-		int flag = 0;
 		Session session = sf.openSession();
-		flag = (Integer)session.save(goods);
-		session.close();
-		if(flag != 0) {
-			return DONE;
-		} else {
-			return FAIL;
-		}
+        int i=0;
+        String hql = "from GOODS_INF where ID='"+goods.getId()+"'";
+        Query query = session.createQuery(hql);
+        ArrayList resultList = (ArrayList) query.list();
+        if(resultList.size() > 0){
+            i=1;
+            session.close();
+            return i;
+        } else {
+        	session.save(goods);
+        	session.close();
+        	return i;
+        }
 	}
 	
 	//删除配件
@@ -110,4 +119,27 @@ public class GoodsDAO {
         tx.commit();
         session.close();
 	}
+	
+	 public int PageNum(int pageSize, String value){
+	        int pageNum;
+	        String hql=null;
+	        ArrayList resultList;
+	        Session session = sf.openSession();
+//	        if(value==null){
+	            hql = "select * from GOODS_INF";
+	            Query query = session.createSQLQuery(hql);
+	            resultList = (ArrayList) query.list();
+//	        }else{
+//	            hql = "select * from GOODS_INF"+" where chn_name= '"+value+"'";
+//	            Query query = session.createSQLQuery(hql);
+//	            System.out.println(query.list());
+//	            resultList = (ArrayList) query.list();
+//	        }
+	        if(resultList.size()/pageSize==0)
+	            pageNum = 1;
+	        else
+	            pageNum = (int)Math.ceil(resultList.size()/(double)pageSize);
+	        session.close();
+	        return pageNum;
+	    }
 }

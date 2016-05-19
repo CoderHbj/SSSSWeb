@@ -57,7 +57,7 @@ public class SignInAction extends ActionSupport implements SessionAware, ModelDr
                 HttpServletRequest request=ServletActionContext.getRequest();
                 request.setAttribute("Message", e.toString());
         }
-        return "input"; 
+        return "success"; 
     }
     public Users getModel() {
         // TODO Auto-generated method stub

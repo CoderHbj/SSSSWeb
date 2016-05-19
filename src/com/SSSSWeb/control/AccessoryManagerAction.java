@@ -10,17 +10,39 @@ import com.opensymphony.xwork2.ModelDriven;
 public class AccessoryManagerAction extends ActionSupport implements
 		ModelDriven<GOODS_INF> {
 
+	/**  */
+	private static final long serialVersionUID = 1L;
+	private List aclist;
+	private int pageSize = 2;
+	private int pageNow = 1;
+	private int pageNum;
+	private GOODS_INF goods = new GOODS_INF();
 	private GoodsService service;
-	private GOODS_INF goods;
-	private List<GOODS_INF> aclist;
-	private String ID;
+	private String id;
+	private String code;
 
-	public GoodsService getService() {
-		return service;
+	public String getCode() {
+		return code;
 	}
 
-	public void setService(GoodsService service) {
-		this.service = service;
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public List getAclist() {
+		return aclist;
+	}
+
+	public void setAclist(List aclist) {
+		this.aclist = aclist;
+	}
+
+	public int getPageNum() {
+		return pageNum;
+	}
+
+	public void setPageNum(int pageNum) {
+		this.pageNum = pageNum;
 	}
 
 	public GOODS_INF getGoods() {
@@ -31,29 +53,26 @@ public class AccessoryManagerAction extends ActionSupport implements
 		this.goods = goods;
 	}
 
-	public List<GOODS_INF> getAclist() {
-		return aclist;
+	public GoodsService getService() {
+		return service;
 	}
 
-	public void setAclist(List<GOODS_INF> aclist) {
-		this.aclist = aclist;
+	public void setService(GoodsService service) {
+		this.service = service;
 	}
 
-	public String getID() {
-		return ID;
+	public String getId() {
+		return id;
 	}
 
-	public void setID(String iD) {
-		ID = iD;
-	}
-
-	@Override
-	public GOODS_INF getModel() {
-		return null;
+	public void setId(String iD) {
+		id = iD;
 	}
 
 	public String getAllAc() {
-		aclist = service.getAllAc();
+		String value = null;
+		aclist = service.SelectAllDetialGoods(pageSize,pageNow);
+		pageNum = service.PageNum(pageSize, value);
 		return SUCCESS;
 	}
 
@@ -63,12 +82,17 @@ public class AccessoryManagerAction extends ActionSupport implements
 	}
 
 	public String deleteAc() {
-		service.deleteAc(Integer.parseInt(ID));
+		service.deleteAc(Integer.parseInt(id));
 		return SUCCESS;
 	}
 
 	public String modifyAc() {
 		service.modifyAc(goods);
 		return SUCCESS;
+	}
+
+	@Override
+	public GOODS_INF getModel() {
+		return goods;
 	}
 }

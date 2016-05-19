@@ -72,6 +72,15 @@
      	<action name="getAllAc" class="AccessoryManagerAction" method="getAllAc">
      		<result>/selectAllAccessory.jsp</result>
      	</action>
+     	<action name="addAc" class="AccessoryManagerAction" method="addAc">
+     		<result>/selectAllAccessory.jsp</result>
+     	</action>
+     	<action name="deleteAc" class="AccessoryManagerAction" method="deleteAc">
+     		<result>/selectAllAccessory.jsp</result>
+     	</action>
+     	<action name="modifyAc" class="AccessoryManagerAction" method="modifyAc">
+     		<result>/selectAllAccessory.jsp</result>
+     	</action>
      	
      	<!-- Orders -->
      	<action name="ishopCart" class="ishopCart">
