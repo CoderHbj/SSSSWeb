@@ -55,7 +55,7 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar ">
-            <li><a href="getAllAc">配件管理 <span class="sr-only">(current)</span></a></li>
+            <li class="active"><a href="getAllAc">配件管理 </a></li>
             <li><a href="#">Reports</a></li>
             <li><a href="#">Analytics</a></li>
             <li><a href="#">Export</a></li>
@@ -76,7 +76,7 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">配件列表</h1>
           <div class="col-md-11 col-md-offset-11">
-          	<button class="btn btn-success" data-toggle="modal" data-target="#addModal" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加员工</button>
+          	<button class="btn btn-success" data-toggle="modal" data-target="#addModal" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加配件</button>
           </div>
           <table class="table table-hover piece" style="margin-left: 0;">
           <thead>
@@ -89,23 +89,25 @@
           		<th>品牌</th>
           		<th>供应商</th>
           		<th>单价</th>
+          		<th>库存数量</th>
           		<th>编辑用户</th>
           		<th>删除用户</th>
           	</tr>
           </thead>
           <tbody>
-          	<s:iterator value="aclist" >
-       		<tr>  
-          		<td><s:property value="code"/></td>  
-          		<td><s:property value="chn_name"/></td>
-          		<td><s:property value="eng_name"/></td>   
-          		<td><s:property value="standard"/></td>  
-          		<td><s:property value="place"/></td>   
-          		<td><s:property value="brand"/></td>    
-          		<td><s:property value="provider"/></td>   
-          		<td><s:property value="price"/></td>
-          		<td><a href="javascript:void(0);" class="btn btn-warning" rel="${ID}" role="button" /><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>修改资料</a></td>
-   				<td><a href="deleteUser?userid=${ID}" class="btn btn-danger" role="button" /><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>删除用户</a></td>
+          	<s:iterator value="aclist" var="ac">
+       		<tr>
+          		<td><s:property value="#ac.code"/></td>  
+          		<td><s:property value="#ac.chn_name"/></td>
+          		<td><s:property value="#ac.eng_name"/></td>   
+          		<td><s:property value="#ac.standard"/></td>  
+          		<td><s:property value="#ac.place"/></td>   
+          		<td><s:property value="#ac.brand"/></td>    
+          		<td><s:property value="#ac.provider"/></td>   
+          		<td><s:property value="#ac.price"/></td>
+          		<td><s:property value="#ac.quantity"/></td>
+          		<td><a href="javascript:void(0);" class="btn btn-warning" rel="${id}" role="button" ><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>修改资料</a></td>
+   				<td><a href="deleteAc?id=${id}" class="btn btn-danger" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>删除用户</a></td>
        		</tr>  
     		</s:iterator>  
           </tbody>
@@ -147,39 +149,43 @@
                   		&times;
             		</button>
             		<h4 class="modal-title" id="myModalLabel">
-               			添加员工
+               			添加配件
             		</h4>
          		</div>
-         <form action="addUser" method="post" id="addForm">
+         <form action="addAc" method="post" id="addForm">
          	<div class="modal-body">
             	<div class="form-group">
-    				<label for="username">姓名</label>
-    				<input type="text" class="form-control" id="username" name="username" placeholder="姓名">
+    				<label for="code">编码</label>
+    				<input type="text" class="form-control" id="code" name="code" />
   				</div>
   				<div class="form-group">
-    				<label for="password">密码</label>
-    				<input type="password" class="form-control" id="password" name="password" placeholder="密码">
+    				<label for="chn_name">中文名称</label>
+    				<input type="text" class="form-control" id="chn_name" name="chn_name" />
   				</div>
   				<div class="form-group">
-    				<label for="phonenum">手机号码</label>
-    				<input type="text" class="form-control" id="phonenum" name="phonenum" placeholder="手机号码">
+    				<label for="eng_name">英文名称</label>
+    				<input type="text" class="form-control" id="eng_name" name="eng_name" />
   				</div>
   				<div class="form-group">
-    				<label for="post">职位</label>
-    				<select class="form-control" name="post">
-  						<s:iterator value="postlist" >
-  						<option value="${post}"><s:property value="post"/>||<s:property value="task"/></option>
-  						</s:iterator>
-					</select>
+    				<label for="standard">规格</label>
+    				<input type="text" class="form-control" id="standard" name="standard" />
   				</div>
-  				<div class="radio">
-  					<label>
-    				<input type="radio" name="usex" id="optionsRadios1" value="男">男
-  					</label>
-  					<label>
-    				<input type="radio" name="usex" id="optionsRadios2" value="女" >女
-  					</label>
-				</div>
+  				<div class="form-group">
+    				<label for="place">产地</label>
+    				<input type="text" class="form-control" id="place" name="place" />
+  				</div>
+  				<div class="form-group">
+    				<label for="brand">品牌</label>
+    				<input type="text" class="form-control" id="brand" name="brand" />
+  				</div>
+  				<div class="form-group">
+    				<label for="provider">供应商</label>
+    				<input type="text" class="form-control" id="provider" name="provider" />
+  				</div>
+  				<div class="form-group">
+    				<label for="price">单价</label>
+    				<input type="text" class="form-control" id="price" name="price" />
+  				</div>
          	</div>
          	<div class="modal-footer">
             	<button type="button" class="btn btn-default" 
@@ -204,32 +210,40 @@
                			修改资料
             		</h4>
          		</div>
-         <form action="changeUser" method="post" id="changeForm">
+         <form action="modifyAc" method="post" id="changeForm">
          	<div class="modal-body">
             	<div class="form-group">
-    				<label for="username">姓名</label>
-    				<input type="text" class="form-control" id="username" name="username" placeholder="姓名">
+    				<label for="code">编码</label>
+    				<input type="text" class="form-control" id="code" name="code" value="<s:property value="#ac.code"/>"/>
   				</div>
   				<div class="form-group">
-    				<label for="phonenum">手机号码</label>
-    				<input type="text" class="form-control" id="phonenum" name="phonenum" placeholder="手机号码">
+    				<label for="chn_name">中文名称</label>
+    				<input type="text" class="form-control" id="chn_name" name="chn_name" value="<s:property value="#ac.code"/>"/>
   				</div>
   				<div class="form-group">
-    				<label for="post">职位</label>
-    				<select class="form-control" name="post">
-  						<s:iterator value="postlist" >
-  						<option value="${post}"><s:property value="post"/>||<s:property value="task"/></option>
-  						</s:iterator>
-					</select>
+    				<label for="eng_name">英文名称</label>
+    				<input type="text" class="form-control" id="eng_name" name="eng_name" />
   				</div>
-  				<div class="radio">
-  					<label>
-    				<input type="radio" name="usex" id="optionsRadios1" value="男">男
-  					</label>
-  					<label>
-    				<input type="radio" name="usex" id="optionsRadios2" value="女" >女
-  					</label>
-				</div>
+  				<div class="form-group">
+    				<label for="standard">规格</label>
+    				<input type="text" class="form-control" id="standard" name="standard" />
+  				</div>
+  				<div class="form-group">
+    				<label for="place">产地</label>
+    				<input type="text" class="form-control" id="place" name="place" />
+  				</div>
+  				<div class="form-group">
+    				<label for="brand">品牌</label>
+    				<input type="text" class="form-control" id="brand" name="brand" />
+  				</div>
+  				<div class="form-group">
+    				<label for="provider">供应商</label>
+    				<input type="text" class="form-control" id="provider" name="provider" />
+  				</div>
+  				<div class="form-group">
+    				<label for="price">单价</label>
+    				<input type="text" class="form-control" id="price" name="price" />
+  				</div>
          	</div>
          	<div class="modal-footer">
             	<button type="button" class="btn btn-default" 
