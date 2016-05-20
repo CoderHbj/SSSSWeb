@@ -5,14 +5,17 @@ import java.util.ArrayList;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.SSSSWeb.model.business.dao.GoodsDAO;
+import com.SSSSWeb.model.business.dao.StockDAO;
 import com.SSSSWeb.model.domain.GOODS_INF;
 import com.SSSSWeb.model.domain.GoodsDetial;
+import com.SSSSWeb.model.domain.STOCK_INF;
 
 public class GoodsService {
 
 	private static int DONE = 1;
 	private static int FAIL = 0;
 	private GoodsDAO goodsDAO;
+	private StockDAO stockDAO;
 
 	public GoodsDAO getGoodsDAO() {
 		return goodsDAO;
@@ -20,6 +23,14 @@ public class GoodsService {
 
 	public void setGoodsDAO(GoodsDAO goodsDAO) {
 		this.goodsDAO = goodsDAO;
+	}
+
+	public StockDAO getStockDAO() {
+		return stockDAO;
+	}
+
+	public void setStockDAO(StockDAO stockDAO) {
+		this.stockDAO = stockDAO;
 	}
 
 	@Transactional
@@ -111,47 +122,42 @@ public class GoodsService {
 		}
 		return reslist;
 	}
-//	public ArrayList<GOODS_INF> getAllAc(int pageSize, int pageNow) {
-//		ArrayList list = goodsDAO.getAllAccessory(pageSize, pageNow);
-//		ArrayList resultList = new ArrayList();
-//		for (int i = 0; i < list.size(); i++) {
-//			Object[] obj = (Object[]) list.get(i);
-//			GOODS_INF ac = new GOODS_INF();
-//			System.out.println(obj[0].toString());
-//			ac.setId(Integer.valueOf(obj[0].toString()));
-//			ac.setCode(obj[1].toString());
-//			ac.setChn_name(obj[2].toString());
-//			ac.setEng_name(obj[3].toString());
-//			ac.setStandard(obj[4].toString());
-//			ac.setPlace(obj[5].toString());
-//			ac.setBrand(obj[6].toString());
-//			// ac.setProvider(Integer.valueOf(obj[7].toString()));
-//			// ac.setPrice(Integer.valueOf(obj[8].toString()));
-//			ac.setPrice(100);
-//			ac.setText(obj[9].toString());
-//			resultList.add(ac);
-//		}
-//		return resultList;
-//	}
 	
 	//查询配件
 	
 
 	// 新增配件
 	@Transactional
-	public int addAc(GOODS_INF goods) {
-		int i = goodsDAO.insertAccessory(goods);
-		return i;
+	public void addAc(GoodsDetial goods) {
+		GOODS_INF accessory = goodsDAO.getGoodsById(goods.getId());
+		STOCK_INF stock = stockDAO.getStockByGoodsId(goods.getId());
+		goodsDAO.insertAccessory(accessory);
+		stockDAO.insertStock(stock);
 	}
 
 	// 删除配件
 	public void deleteAc(int ID) {
+		STOCK_INF stock = stockDAO.getStockByGoodsId(ID);
 		goodsDAO.deleteAccessory(ID);
+		stockDAO.deleteStock(stock.getId());
 	}
 
 	// 修改配件
 	@Transactional
-	public void modifyAc(GOODS_INF goods) {
-		goodsDAO.updateAccessory(goods);
+	public void modifyAc(GoodsDetial goods) {
+		GOODS_INF accessory = goodsDAO.getGoodsById(goods.getId());
+		accessory.setCode(goods.getCode());
+		accessory.setChn_name(goods.getChn_name());
+		accessory.setEng_name(goods.getEng_name());
+		accessory.setStandard(goods.getStandard());
+		accessory.setPlace(goods.getPlace());
+		accessory.setBrand(goods.getBrand());
+		accessory.setProvider(goods.getProvider());
+		accessory.setPrice(goods.getPrice());
+		accessory.setText(goods.getText());
+		STOCK_INF stock = stockDAO.getStockByGoodsId(goods.getId());
+		stock.setQuantity(goods.getQuantity());
+		goodsDAO.updateAccessory(accessory);
+		stockDAO.updateStock(stock);
 	}
 }

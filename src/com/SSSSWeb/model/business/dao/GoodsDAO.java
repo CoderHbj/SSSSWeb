@@ -9,6 +9,7 @@ import org.hibernate.Transaction;
 
 import com.SSSSWeb.model.domain.GOODS_INF;
 import com.SSSSWeb.model.domain.GoodsDetial;
+import com.SSSSWeb.model.domain.STOCK_INF;
 
 public class GoodsDAO {
 	
@@ -82,21 +83,10 @@ public class GoodsDAO {
 	}
 	
 	//新增配件
-	public int insertAccessory(GOODS_INF goods){
+	public void insertAccessory(GOODS_INF accessory){
 		Session session = sf.openSession();
-        int i=0;
-        String hql = "from GOODS_INF where ID='"+goods.getId()+"'";
-        Query query = session.createQuery(hql);
-        ArrayList resultList = (ArrayList) query.list();
-        if(resultList.size() > 0){
-            i=1;
-            session.close();
-            return i;
-        } else {
-        	session.save(goods);
-        	session.close();
-        	return i;
-        }
+        session.save(accessory);
+        session.close();
 	}
 	
 	//删除配件
@@ -110,14 +100,28 @@ public class GoodsDAO {
 	}
 	
 	//编辑配件信息
-	public void updateAccessory(GOODS_INF goods) {
+	public void updateAccessory(GOODS_INF accessory) {
 		Session session = sf.openSession();
         Transaction tx = session.beginTransaction();
-        GOODS_INF accessory = (GOODS_INF) session.get(GOODS_INF.class, goods.getId());
-        session.delete(accessory);
-        session.save(goods);
+        GOODS_INF old_ac = (GOODS_INF) session.get(GOODS_INF.class, accessory.getId());
+        old_ac.setCode(accessory.getCode());
+        old_ac.setChn_name(accessory.getChn_name());
+        old_ac.setEng_name(accessory.getEng_name());
+        old_ac.setStandard(accessory.getStandard());
+        old_ac.setPlace(accessory.getPlace());
+        old_ac.setBrand(accessory.getBrand());
+        old_ac.setProvider(accessory.getProvider());
+        old_ac.setPrice(accessory.getPrice());
+        old_ac.setText(accessory.getText());
+        session.save(old_ac);
         tx.commit();
         session.close();
+	}
+	
+	public GOODS_INF getGoodsById(int id){
+		Session session = sf.openSession();
+		GOODS_INF goods = (GOODS_INF) session.get(GOODS_INF.class, id);
+		return goods;
 	}
 	
 	 public int PageNum(int pageSize, String value){

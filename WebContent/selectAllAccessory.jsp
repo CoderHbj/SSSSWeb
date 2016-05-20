@@ -183,8 +183,8 @@
     				<input type="text" class="form-control" id="provider" name="provider" />
   				</div>
   				<div class="form-group">
-    				<label for="price">单价</label>
-    				<input type="text" class="form-control" id="price" name="price" />
+    				<label for="price">库存</label>
+    				<input type="text" class="form-control" id="quantity" name="quantity" />
   				</div>
          	</div>
          	<div class="modal-footer">
@@ -212,6 +212,7 @@
          		</div>
          <form action="modifyAc" method="post" id="changeForm">
          	<div class="modal-body">
+         		<input type="hidden" value="${id }" />
             	<div class="form-group">
     				<label for="code">编码</label>
     				<input type="text" class="form-control" id="code" name="code" value="<s:property value="#ac.code"/>"/>
@@ -243,6 +244,14 @@
   				<div class="form-group">
     				<label for="price">单价</label>
     				<input type="text" class="form-control" id="price" name="price" />
+  				</div>
+  				<div class="form-group">
+    				<label for="price">描述</label>
+    				<input type="text" class="form-control" id="text" name="text" />
+  				</div>
+  				<div class="form-group">
+    				<label for="price">库存</label>
+    				<input type="text" class="form-control" id="quantity" name="quantity" />
   				</div>
          	</div>
          	<div class="modal-footer">
@@ -304,7 +313,7 @@
 	$(document).ready(function() {
 		  $(".btn-warning").click(function() {
 		    var id = $(this).attr('rel');
-		    $("#myModal .modal-content > form").attr("action", "changeUser?userid=" + id);
+		    $("#myModal .modal-content > form").attr("action", "modifyAc?id=" + id);
 		    $("#myModal").modal();
 		  });
 		  $('#addForm').bootstrapValidator({

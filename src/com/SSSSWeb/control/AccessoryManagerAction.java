@@ -4,11 +4,12 @@ import java.util.List;
 
 import com.SSSSWeb.model.business.service.GoodsService;
 import com.SSSSWeb.model.domain.GOODS_INF;
+import com.SSSSWeb.model.domain.GoodsDetial;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
 public class AccessoryManagerAction extends ActionSupport implements
-		ModelDriven<GOODS_INF> {
+		ModelDriven<GoodsDetial> {
 
 	/**  */
 	private static final long serialVersionUID = 1L;
@@ -16,18 +17,9 @@ public class AccessoryManagerAction extends ActionSupport implements
 	private int pageSize = 2;
 	private int pageNow = 1;
 	private int pageNum;
-	private GOODS_INF goods = new GOODS_INF();
+	private GoodsDetial goods = new GoodsDetial();
 	private GoodsService service;
 	private String id;
-	private String code;
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
 
 	public List getAclist() {
 		return aclist;
@@ -45,11 +37,11 @@ public class AccessoryManagerAction extends ActionSupport implements
 		this.pageNum = pageNum;
 	}
 
-	public GOODS_INF getGoods() {
+	public GoodsDetial getGoods() {
 		return goods;
 	}
 
-	public void setGoods(GOODS_INF goods) {
+	public void setGoods(GoodsDetial goods) {
 		this.goods = goods;
 	}
 
@@ -65,13 +57,13 @@ public class AccessoryManagerAction extends ActionSupport implements
 		return id;
 	}
 
-	public void setId(String iD) {
-		id = iD;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getAllAc() {
 		String value = null;
-		aclist = service.SelectAllDetialGoods(pageSize,pageNow);
+		aclist = service.SelectAllDetialGoods(pageSize, pageNow);
 		pageNum = service.PageNum(pageSize, value);
 		return SUCCESS;
 	}
@@ -92,7 +84,8 @@ public class AccessoryManagerAction extends ActionSupport implements
 	}
 
 	@Override
-	public GOODS_INF getModel() {
+	public GoodsDetial getModel() {
 		return goods;
 	}
+
 }
