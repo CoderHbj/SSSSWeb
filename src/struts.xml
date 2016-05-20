@@ -72,14 +72,29 @@
      	<action name="getAllAc" class="AccessoryManagerAction" method="getAllAc">
      		<result>/selectAllAccessory.jsp</result>
      	</action>
-     	<action name="addAc" class="AccessoryManagerAction" method="addAc">
+     	<action name="getAc" class="AccessoryManagerAction" method="getAc">
      		<result>/selectAllAccessory.jsp</result>
+     	</action>
+     	<action name="getOneAc" class="AccessoryManagerAction" method="getOneAc">
+     		<result>/selectAllAccessory.jsp</result>
+     	</action>
+     	<action name="addAc" class="AccessoryManagerAction" method="addAc">
+     		<result type="chain">
+				<param name="namespace">/</param>
+				<param name="actionName">getAllAc</param>
+			</result>
      	</action>
      	<action name="deleteAc" class="AccessoryManagerAction" method="deleteAc">
-     		<result>/selectAllAccessory.jsp</result>
+     		<result type="chain">
+				<param name="namespace">/</param>
+				<param name="actionName">getAllAc</param>
+			</result>
      	</action>
      	<action name="modifyAc" class="AccessoryManagerAction" method="modifyAc">
-     		<result>/selectAllAccessory.jsp</result>
+     		<result type="chain">
+				<param name="namespace">/</param>
+				<param name="actionName">getAllAc</param>
+			</result>
      	</action>
      	
      	<!-- Orders -->

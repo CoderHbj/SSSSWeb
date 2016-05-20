@@ -28,8 +28,24 @@ public class GoodsDetial {
 	private int quantity;
 	private int num;
 	
-	
-	
+	public GoodsDetial setgd(GOODS_INF ac, STOCK_INF stock) {
+		GoodsDetial to = new GoodsDetial();
+		to.setId(ac.getId());
+		to.setCode(ac.getCode());
+		to.setChn_name(ac.getChn_name());
+		to.setEng_name(ac.getEng_name());
+		to.setType(ac.getType());
+		to.setColor(ac.getColor());
+		to.setStandard(ac.getStandard());
+		to.setDisplacement(ac.getDisplacement());
+		to.setPlace(ac.getPlace());
+		to.setBrand(ac.getBrand());
+		to.setProvider(ac.getProvider());
+		to.setPrice(ac.getPrice());
+		to.setText(ac.getText());
+		to.setQuantity(stock.getQuantity());
+		return to;
+	}
 	public int getNum() {
 		return num;
 	}

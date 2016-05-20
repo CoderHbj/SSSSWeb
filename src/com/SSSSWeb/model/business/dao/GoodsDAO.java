@@ -12,7 +12,7 @@ import com.SSSSWeb.model.domain.GoodsDetial;
 import com.SSSSWeb.model.domain.STOCK_INF;
 
 public class GoodsDAO {
-	
+
 	private static int DONE = 1;
 	private static int FAIL = 0;
 	private SessionFactory sf;
@@ -56,94 +56,118 @@ public class GoodsDAO {
 		return resultList;
 	}
 
-	//查询所有配件
-	public ArrayList<GoodsDetial> SelectAllDetialGoods(int pageSize, int pageNow) {
+	// 查询所有配件
+	public ArrayList<GoodsDetial> getAllAccessory() {
 		Session session = sf.openSession();
 		String hql = "select g.id,g.code,g.chn_name,g.eng_name,g.type,g.color,g.standard,g.displacement,g.place,g.brand,g.provider,g.price,g.text,s.quantity"
 				+ " from GOODS_INF g,STOCK_INF s  "
-				+ " where type='2'" 
-				+ " and g.id=s.goods_ID "
-				+ "limit "+(pageNow*pageSize-pageSize)+","+pageSize;
+				+ " where type='2'"
+				+ " and g.id=s.goods_ID ";
 		Query query = session.createSQLQuery(hql);
 		ArrayList resultList = (ArrayList) query.list();
 		session.close();
 		return resultList;
 	}
-	
-	//查询配件
-	public ArrayList<GOODS_INF> getAccessory(GOODS_INF goods) {
+
+	// 查询配件
+	public ArrayList<GOODS_INF> getAccessory(String chnName) {
 		Session session = sf.openSession();
-		String hql = "select code,chn_name,eng_name,standard,place,brand,provider,price "
-					+"from GOODS_INF "
-					+"where type='2'";
+		String hql = "select g.id,g.code,g.chn_name,g.eng_name,g.type,g.color,g.standard,g.displacement,g.place,g.brand,g.provider,g.price,g.text,s.quantity"
+				+ " from GOODS_INF g,STOCK_INF s  "
+				+ " where type='2'"
+				+ " and g.id=s.goods_id "
+				+ " and chn_name like '%"+chnName+"%'";
 		Query query = session.createQuery(hql);
 		ArrayList resultList = (ArrayList) query.list();
 		session.close();
 		return resultList;
 	}
-	
-	//新增配件
-	public void insertAccessory(GOODS_INF accessory){
+
+	// 新增配件
+	public void insertAccessory(GOODS_INF accessory) {
 		Session session = sf.openSession();
-        session.save(accessory);
-        session.close();
+		session.save(accessory);
+		session.close();
 	}
-	
-	//删除配件
+
+	// 删除配件
 	public void deleteAccessory(int ID) {
 		Session session = sf.openSession();
-		Transaction tx = session.beginTransaction(); 
+		Transaction tx = session.beginTransaction();
 		GOODS_INF accessory = (GOODS_INF) session.get(GOODS_INF.class, ID);
 		session.delete(accessory);
 		tx.commit();
 		session.close();
 	}
-	
-	//编辑配件信息
+
+	// 编辑配件信息
 	public void updateAccessory(GOODS_INF accessory) {
 		Session session = sf.openSession();
-        Transaction tx = session.beginTransaction();
-        GOODS_INF old_ac = (GOODS_INF) session.get(GOODS_INF.class, accessory.getId());
-        old_ac.setCode(accessory.getCode());
-        old_ac.setChn_name(accessory.getChn_name());
-        old_ac.setEng_name(accessory.getEng_name());
-        old_ac.setStandard(accessory.getStandard());
-        old_ac.setPlace(accessory.getPlace());
-        old_ac.setBrand(accessory.getBrand());
-        old_ac.setProvider(accessory.getProvider());
-        old_ac.setPrice(accessory.getPrice());
-        old_ac.setText(accessory.getText());
-        session.save(old_ac);
-        tx.commit();
-        session.close();
+		Transaction tx = session.beginTransaction();
+		GOODS_INF old_ac = (GOODS_INF) session.get(GOODS_INF.class,
+				accessory.getId());
+		old_ac.setCode(accessory.getCode());
+		old_ac.setChn_name(accessory.getChn_name());
+		old_ac.setEng_name(accessory.getEng_name());
+		old_ac.setStandard(accessory.getStandard());
+		old_ac.setPlace(accessory.getPlace());
+		old_ac.setBrand(accessory.getBrand());
+		old_ac.setProvider(accessory.getProvider());
+		old_ac.setPrice(accessory.getPrice());
+		old_ac.setText(accessory.getText());
+		session.save(old_ac);
+		tx.commit();
+		session.close();
 	}
-	
-	public GOODS_INF getGoodsById(int id){
+
+	public GOODS_INF getGoodsById(int id) {
 		Session session = sf.openSession();
 		GOODS_INF goods = (GOODS_INF) session.get(GOODS_INF.class, id);
 		return goods;
 	}
-	
-	 public int PageNum(int pageSize, String value){
-	        int pageNum;
-	        String hql=null;
-	        ArrayList resultList;
-	        Session session = sf.openSession();
-//	        if(value==null){
-	            hql = "select * from GOODS_INF";
-	            Query query = session.createSQLQuery(hql);
-	            resultList = (ArrayList) query.list();
-//	        }else{
-//	            hql = "select * from GOODS_INF"+" where chn_name= '"+value+"'";
-//	            Query query = session.createSQLQuery(hql);
-//	            System.out.println(query.list());
-//	            resultList = (ArrayList) query.list();
-//	        }
-	        if(resultList.size()/pageSize==0)
-	            pageNum = 1;
-	        else
-	            pageNum = (int)Math.ceil(resultList.size()/(double)pageSize);
-	        session.close();
-	        return pageNum;
-	    }
+
+	public GOODS_INF getGoodsByCode(String code) {
+		Session session = sf.openSession();
+		String hql = "select * from GOODS_INF where code='" + code + "'";
+		Query query = session.createSQLQuery(hql);
+		ArrayList list = (ArrayList) query.list();
+		Object[] obj = (Object[]) list.get(0);
+		GOODS_INF to = new GOODS_INF();
+		to.setId(Integer.valueOf(obj[0].toString()));
+		to.setCode(obj[1].toString());
+		to.setChn_name(obj[2].toString());
+		to.setEng_name(obj[3].toString());
+		to.setType(obj[4].toString());
+		to.setStandard(obj[6].toString());
+		to.setPlace(obj[8].toString());
+		to.setBrand(obj[9].toString());
+		to.setProvider(Integer.valueOf(obj[10].toString()));
+		to.setPrice(Integer.valueOf(obj[11].toString()));
+		to.setText(obj[12].toString());
+		return to;
+	}
+
+//	public int PageNum(int pageSize, String value) {
+//		int pageNum;
+//		String hql = null;
+//		ArrayList resultList;
+//		Session session = sf.openSession();
+//		if (value == null) {
+//			hql = "select * from GOODS_INF";
+//			Query query = session.createSQLQuery(hql);
+//			resultList = (ArrayList) query.list();
+//		} else {
+//			hql = "select * from GOODS_INF" + " where chn_name= '" + value
+//					+ "'";
+//			Query query = session.createSQLQuery(hql);
+//			System.out.println(query.list());
+//			resultList = (ArrayList) query.list();
+//		}
+//		if (resultList.size() / pageSize == 0)
+//			pageNum = 1;
+//		else
+//			pageNum = (int) Math.ceil(resultList.size() / (double) pageSize);
+//		session.close();
+//		return pageNum;
+//	}
 }

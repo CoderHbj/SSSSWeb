@@ -119,6 +119,7 @@
 	
 	<bean id="AccessoryManagerAction" class="com.SSSSWeb.control.AccessoryManagerAction">
 		<property name="service" ref="goodsService"></property>
+		<property name="supservice" ref="supplierService"></property>
 	</bean>
 	
 	<!-- Orders -->

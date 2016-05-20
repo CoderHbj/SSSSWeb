@@ -44,8 +44,8 @@
             <li><a href="#" id="example_bottom" rel="popover" >个人资料</a></li>
             <li><a href="signout">退出登录</a></li>
           </ul>
-          <form class="navbar-form navbar-right" action="selectUser" method="post" id="searchForm">
-            <input type="text" class="form-control" name="key" placeholder="Search...">
+          <form class="navbar-form navbar-right" action="getAc" method="post" id="searchForm">
+            <input type="text" class="form-control" id="key" name="key" placeholder="Search...">
           </form>
         </div>
       </div>
@@ -106,8 +106,8 @@
           		<td><s:property value="#ac.provider"/></td>   
           		<td><s:property value="#ac.price"/></td>
           		<td><s:property value="#ac.quantity"/></td>
-          		<td><a href="javascript:void(0);" class="btn btn-warning" rel="${id}" role="button" ><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>修改资料</a></td>
-   				<td><a href="deleteAc?id=${id}" class="btn btn-danger" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>删除用户</a></td>
+          		<td><a href="javascript:void(0);" class="btn btn-warning" id="modifyButton" rel="${id}" role="button" ><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>修改资料</a></td>
+   				<td><a href="deleteAc?id=${id}" class="btn btn-danger" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>删除配件</a></td>
        		</tr>  
     		</s:iterator>  
           </tbody>
@@ -176,11 +176,28 @@
   				</div>
   				<div class="form-group">
     				<label for="brand">品牌</label>
-    				<input type="text" class="form-control" id="brand" name="brand" />
+    				<!--<input type="text" class="form-control" id="brand" name="brand" />-->
+    				<select class="form-control" id="brand" name="brand">
+    					<option value="道奇">道奇</option>
+    					<option value="米其林">米其林</option>
+    					<option value="三菱">三菱</option>
+    				</select>
   				</div>
   				<div class="form-group">
     				<label for="provider">供应商</label>
-    				<input type="text" class="form-control" id="provider" name="provider" />
+    				<select class="form-control" id="provider" name="provider">
+    				<s:iterator value="suplist" var="sup">
+    					<option value="<s:property value="#sup.supplier_id" />"><s:property value="#sup.supplier_name" /></option>
+    				</s:iterator>
+    				</select>
+  				</div>
+  				<div class="form-group">
+    				<label for="provider">单价</label>
+    				<input type="text" class="form-control" id="price" name="price" />
+  				</div>
+  				<div class="form-group">
+    				<label for="provider">描述</label>
+    				<input type="text" class="form-control" id="text" name="text" />
   				</div>
   				<div class="form-group">
     				<label for="price">库存</label>
@@ -215,11 +232,11 @@
          		<input type="hidden" value="${id }" />
             	<div class="form-group">
     				<label for="code">编码</label>
-    				<input type="text" class="form-control" id="code" name="code" value="<s:property value="#ac.code"/>"/>
+    				<input type="text" class="form-control" id="code" name="code" value="<s:property value="#goods.code"/>"/>
   				</div>
   				<div class="form-group">
     				<label for="chn_name">中文名称</label>
-    				<input type="text" class="form-control" id="chn_name" name="chn_name" value="<s:property value="#ac.code"/>"/>
+    				<input type="text" class="form-control" id="chn_name" name="chn_name" value="<s:property value="#goods.code"/>"/>
   				</div>
   				<div class="form-group">
     				<label for="eng_name">英文名称</label>
@@ -235,11 +252,20 @@
   				</div>
   				<div class="form-group">
     				<label for="brand">品牌</label>
-    				<input type="text" class="form-control" id="brand" name="brand" />
+    				<!--<input type="text" class="form-control" id="brand" name="brand" />-->
+    				<select class="form-control" id="brand" name="brand">
+    					<option value="道奇">道奇</option>
+    					<option value="米其林">米其林</option>
+    					<option value="三菱">三菱</option>
+    				</select>
   				</div>
   				<div class="form-group">
     				<label for="provider">供应商</label>
-    				<input type="text" class="form-control" id="provider" name="provider" />
+    				<select class="form-control" id="provider" name="provider">
+    				<s:iterator value="suplist" var="sup">
+    					<option value="<s:property value="#sup.supplier_id" />"><s:property value="#sup.supplier_name" /></option>
+    				</s:iterator>
+    				</select>
   				</div>
   				<div class="form-group">
     				<label for="price">单价</label>
@@ -313,7 +339,7 @@
 	$(document).ready(function() {
 		  $(".btn-warning").click(function() {
 		    var id = $(this).attr('rel');
-		    $("#myModal .modal-content > form").attr("action", "modifyAc?id=" + id);
+		    $("#myModal .modal-content > form").attr("action", "modifyAc?id="+id);
 		    $("#myModal").modal();
 		  });
 		  $('#addForm').bootstrapValidator({
