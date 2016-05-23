@@ -58,9 +58,9 @@
 		<div class="row">
 			<div class="col-sm-3 col-md-2 sidebar">
 				<ul class="nav nav-sidebar ">
-					<li class="active"><a href="getAllAc">配件管理 </a></li>
+					<li><a href="getAllAc">配件管理 </a></li>
 					<li><a href="#">Reports</a></li>
-					<li><a href="getSaleList">销售单审核</a></li>
+					<li class="active"><a href="getSaleList">销售单审核</a></li>
 					<li><a href="getSubList">订货单签收</a></li>
 				</ul>
 				<ul class="nav nav-sidebar">
@@ -77,47 +77,36 @@
 				</c:if>
 			</div>
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-				<h1 class="page-header">配件列表</h1>
-				<div class="col-md-11 col-md-offset-11">
-					<button class="btn btn-success" data-toggle="modal"
-						data-target="#addModal" role="button">
-						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加配件
-					</button>
-				</div>
+				<h1 class="page-header">销售单</h1>
 				<table class="table table-hover piece" style="margin-left: 0;">
 					<thead>
 						<tr>
 							<th>编码</th>
 							<th>中文名称</th>
 							<th>英文名称</th>
-							<th>规格</th>
-							<th>产地</th>
-							<th>品牌</th>
-							<th>供应商</th>
-							<th>单价</th>
-							<th>库存数量</th>
-							<th>编辑用户</th>
-							<th>删除用户</th>
+							<th>价格</th>
+							<th>数量</th>
+							<th>状态</th>
+							<th>审核</th>
+							<th>取消订单</th>
 						</tr>
 					</thead>
 					<tbody>
-						<s:iterator value="aclist" var="ac">
+						<s:iterator value="ucSaleList" var="uc">
 							<tr>
-								<td><s:property value="#ac.code" /></td>
-								<td><s:property value="#ac.chn_name" /></td>
-								<td><s:property value="#ac.eng_name" /></td>
-								<td><s:property value="#ac.standard" /></td>
-								<td><s:property value="#ac.place" /></td>
-								<td><s:property value="#ac.brand" /></td>
-								<td><s:property value="#ac.provider" /></td>
-								<td><s:property value="#ac.price" /></td>
-								<td><s:property value="#ac.quantity" /></td>
-								<td><a href="javascript:void(0);" class="btn btn-warning"
-									id="modifyButton" rel="${id}" role="button"><span
-										class="glyphicon glyphicon-cog" aria-hidden="true"></span>修改资料</a></td>
-								<td><a href="deleteAc?id=${id}" class="btn btn-danger"
+								<td><s:property value="#uc.order_id" /></td>
+								<td><s:property value="#uc.chn_name" /></td>
+								<td><s:property value="#uc.eng_name" /></td>
+								<td><s:property value="#uc.price" /></td>
+								<td><s:property value="#uc.num" /></td>
+								<td><s:property value="#uc.order_state" /></td>
+								<td><a href="checkSaleList?id=${order_id}"
+									class="btn btn-warning" id="modifyButton" rel="${order_id}"
+									role="button"><span class="glyphicon glyphicon-cog"
+										aria-hidden="true"></span>审核</a></td>
+								<td><a href="cancelSaleList?id=${order_id}" class="btn btn-danger"
 									role="button"><span class="glyphicon glyphicon-trash"
-										aria-hidden="true"></span>删除配件</a></td>
+										aria-hidden="true"></span>取消订单</a></td>
 							</tr>
 						</s:iterator>
 					</tbody>
@@ -331,7 +320,7 @@
 							function() {
 								var id = $(this).attr('rel');
 								$("#myModal .modal-content > form").attr(
-										"action", "modifyAc?id=" + id);
+										"action", "checkSaleList?id=" + id);
 								$("#myModal").modal();
 							});
 					$('#addForm').bootstrapValidator({

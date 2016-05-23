@@ -2,12 +2,13 @@ package com.SSSSWeb.model.business.dao;
 
 import java.util.ArrayList;
 
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-import com.SSSSWeb.model.domain.GOODS_INF;
+import com.SSSSWeb.model.domain.Indent;
 import com.SSSSWeb.model.domain.STOCK_INF;
 
 public class StockDAO {
@@ -59,4 +60,5 @@ public class StockDAO {
         session.save(stock);
         session.close();
 	}
+
 }

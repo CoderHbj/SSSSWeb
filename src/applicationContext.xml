@@ -10,7 +10,7 @@
 	<bean id="dataSource"
 		class="org.apache.commons.dbcp2.BasicDataSource">
 		<property name="driverClassName"><value>com.mysql.jdbc.Driver</value></property>
-		<property name="url" value="jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=utf8"></property>
+		<property name="url" value="jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=utf8&amp;zeroDateTimeBehavior=convertToNull"></property>
 		<property name="username" value="root"></property>
 		<property name="password" value=""></property>
 	</bean>
@@ -31,6 +31,8 @@
         		<value>com.SSSSWeb.model.domain.Orders_List</value>
         		<value>com.SSSSWeb.model.domain.Orders_Count</value>
         		<value>com.SSSSWeb.model.domain.Orders_Info</value>
+        		<value>com.SSSSWeb.model.domain.Indent</value>
+        		<value>com.SSSSWeb.model.domain.UncheckedSubList</value>
     		</list>
   		</property>
   		
@@ -116,10 +118,18 @@
 	<bean id="sDetialGoodsA" class="com.SSSSWeb.control.SelectDetialCoodsAction">
 		<property name="gs" ref="goodsService"></property>
 	</bean>
-	
 	<bean id="AccessoryManagerAction" class="com.SSSSWeb.control.AccessoryManagerAction">
 		<property name="service" ref="goodsService"></property>
 		<property name="supservice" ref="supplierService"></property>
+	</bean>
+	
+	<!-- SubList -->
+	<bean id="indentDAO" class="com.SSSSWeb.model.business.dao.IndentDAO">
+		<property name="sf" ref="sessionFactory"></property>
+	</bean>
+	<bean id="indentService" class="com.SSSSWeb.model.business.service.IndentService">
+		<property name="indentDAO" ref="indentDAO"></property>
+		<property name="stockDAO" ref="stockDAO"></property>
 	</bean>
 	
 	<!-- Orders -->
@@ -142,7 +152,11 @@
 		<property name="os" ref="ordersService"></property>
 	</bean>
 	
-	
+	<bean id="AcSaleManagerAction" class="com.SSSSWeb.control.AcSaleManagerAction">
+		<property name="ordersService" ref="ordersService"></property>
+		<property name="indentService" ref="indentService"></property>
+		<property name="goodsService" ref="goodsService"></property>
+	</bean>
 	
 	<!-- Customer -->
 	<bean id="customerDAO" class="com.SSSSWeb.model.business.dao.CustomerDAO">

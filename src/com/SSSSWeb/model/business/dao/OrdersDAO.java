@@ -1,9 +1,9 @@
 package com.SSSSWeb.model.business.dao;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.hibernate.Query;
@@ -16,8 +16,6 @@ import com.SSSSWeb.model.domain.Orders;
 import com.SSSSWeb.model.domain.Orders_Count;
 import com.SSSSWeb.model.domain.Orders_Info;
 import com.SSSSWeb.model.domain.Orders_List;
-import com.SSSSWeb.model.domain.Supplier;
-import com.SSSSWeb.model.domain.Users;
 
 public class OrdersDAO {
 	private SessionFactory sf;
@@ -32,7 +30,7 @@ public class OrdersDAO {
 
 	public void InsertShopCart(Customer c,int id, int num) throws ParseException  {
 		Session session = sf.openSession();
-		String hql="from Orders  where  order_state='���ﳵ' and customer_id = "+c.getCustomer_id();
+		String hql="from Orders  where  order_state='购物车' and customer_id = "+c.getCustomer_id();
 		Query query=session.createQuery(hql);
 		Orders o=(Orders)query.uniqueResult();
 		if(o==null){
@@ -41,7 +39,7 @@ public class OrdersDAO {
 		o.setOrder_time(sdf.parse("0000-00-00 00:00:00"));
 		o.setSend_time(sdf.parse("0000-00-00 00:00:00"));
 		o.setSettle_time(sdf.parse("0000-00-00 00:00:00"));
-		o.setOrder_state("���ﳵ");
+		o.setOrder_state("购物车");
 		o.setCustomer_id(c.getCustomer_id());
 		session.save(o);
 		}
@@ -78,9 +76,9 @@ public class OrdersDAO {
 	
 	public ArrayList<Orders_Info> SelectOrders(Customer c) {
 		Session session = sf.openSession();
-		String hql="select o.order_id,o.order_time,o.send_time,o.settle_time,o.order_state,o.customer_id,t.order_list_id,t.id,t.num,g.code,g.chn_name,g.eng_name,g.color,g.price,c.url " +
-				" from Orders o,Orders_List t, GOODS_INF g, CAR_IMG_INF c " +
-				" where o.order_id=t.order_id and g.id=t.id and c.goods_id=g.id and o.customer_id =" + c.getCustomer_id() +" and c.level = 1 and o.order_state!= '���ﳵ'";
+		String hql="select o.order_id,o.order_time,o.send_time,o.settle_time,o.order_state,o.customer_id,t.order_list_id,t.id,t.num,g.code,g.chn_name,g.eng_name,g.color,g.price,c.url " 
+				+" from Orders o,Orders_List t, GOODS_INF g, CAR_IMG_INF c " 
+				+" where o.order_id=t.order_id and g.id=t.id and c.goods_id=g.id and o.customer_id =" + c.getCustomer_id() +" and c.level = 1 and o.order_state!= '���ﳵ'";
 		Query query = session.createQuery(hql);
 		ArrayList resultList = (ArrayList) query.list();
 		session.close();
@@ -91,7 +89,7 @@ public class OrdersDAO {
 		Session session = sf.openSession();
 		String hql="select o.order_id,o.order_time,o.send_time,o.settle_time,o.order_state,o.customer_id,t.order_list_id,t.id,t.num,g.code,g.chn_name,g.eng_name,g.color,g.price,c.url " +
 				"from Orders o,Orders_List t, GOODS_INF g, CAR_IMG_INF c " +
-				" where o.order_id=t.order_id and g.id=t.id and c.goods_id=g.id and o.customer_id = " + c.getCustomer_id() +" and c.level = 1 and o.order_state= '���ﳵ'";
+				" where o.order_id=t.order_id and g.id=t.id and c.goods_id=g.id and o.customer_id = " + c.getCustomer_id() +" and c.level = 1 and o.order_state= '���ﳵ'";
 		Query query = session.createQuery(hql);
 		ArrayList resultList = (ArrayList) query.list();
 		session.close();
@@ -120,11 +118,48 @@ public class OrdersDAO {
 		o.setOrder_time(date);
 		o.setSend_time(sdf.parse("0000-00-00 00:00:00"));
 		o.setSettle_time(sdf.parse("0000-00-00 00:00:00"));
-		o.setOrder_state("������");
+		o.setOrder_state("���");
 		o.setCustomer_id(c.getCustomer_id());
 		session.save(o);
 		return o;
 	}
 	
-
+	//获取未审核订单
+	public ArrayList getUncheckedOrders(){
+		Session session = sf.openSession();
+		String hql="select o.order_id,o.order_state,o.customer_id,t.order_list_id,t.id,t.num,g.code,g.chn_name,g.eng_name,g.color,g.price " 
+				+ " from Orders o,Orders_List t, GOODS_INF g " 
+				+ " where o.order_id=t.order_id "
+				+ " and g.id=t.id "
+				+ " and o.order_state='待发货'";
+		Query query = session.createQuery(hql);
+		ArrayList resultList = (ArrayList) query.list();
+		session.close();
+		return resultList;
+	}
+	
+	//审核订单
+	public void checkOrders(int id){
+		Session session = sf.openSession();
+		Transaction tx = session.beginTransaction();
+		Calendar cal=Calendar.getInstance();
+		Date date=cal.getTime();
+		Orders order = (Orders) session.get(Orders.class, id);
+		order.setSend_time(date);
+		order.setOrder_state("已发货");
+		session.save(order);
+		tx.commit();
+		session.close();
+	}
+	
+	//取消订单
+	public void cancelSale(int id){
+		Session session = sf.openSession();
+		Transaction tx = session.beginTransaction();
+		Orders order = (Orders) session.get(Orders.class, id);
+		order.setOrder_state("交易失败");
+		session.save(order);
+		tx.commit();
+		session.close();
+	}
 }

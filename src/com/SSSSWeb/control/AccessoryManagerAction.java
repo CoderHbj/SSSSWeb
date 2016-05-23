@@ -11,20 +11,24 @@ import org.apache.struts2.interceptor.SessionAware;
 import com.SSSSWeb.model.business.service.GoodsService;
 import com.SSSSWeb.model.business.service.SupplierService;
 import com.SSSSWeb.model.domain.GoodsDetial;
+import com.SSSSWeb.model.domain.Supplier;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
-
+/*
+ * 配件基本信息维护Action（包含配件基本信息和库存信息）
+ * 1、新配件入库
+ * 2、删除配件
+ * 3、更新配件信息
+ * 4、查询配件信息
+ * */
 public class AccessoryManagerAction extends ActionSupport implements
 		ModelDriven<GoodsDetial>,SessionAware {
 
 	/**  */
 	
 	private static final long serialVersionUID = 1L;
-	private List aclist;
-	private List suplist;
-//	private int pageSize = 2;
-//	private int pageNow = 1;
-//	private int pageNum;
+	private List<GoodsDetial> aclist;
+	private List<Supplier> suplist;
 	private GoodsDetial goods = new GoodsDetial();
 	private GoodsService service;
 	private SupplierService supservice;
@@ -32,19 +36,19 @@ public class AccessoryManagerAction extends ActionSupport implements
 	private String id;
 	private String key;
 
-	public List getAclist() {
+	public List<GoodsDetial> getAclist() {
 		return aclist;
 	}
 
-	public void setAclist(List aclist) {
+	public void setAclist(List<GoodsDetial> aclist) {
 		this.aclist = aclist;
 	}
 
-	public List getSuplist() {
+	public List<Supplier> getSuplist() {
 		return suplist;
 	}
 
-	public void setSuplist(List suplist) {
+	public void setSuplist(List<Supplier> suplist) {
 		this.suplist = suplist;
 	}
 
@@ -63,7 +67,23 @@ public class AccessoryManagerAction extends ActionSupport implements
 	public void setService(GoodsService service) {
 		this.service = service;
 	}
-	
+
+	public SupplierService getSupservice() {
+		return supservice;
+	}
+
+	public void setSupservice(SupplierService supservice) {
+		this.supservice = supservice;
+	}
+
+	public Map<String, Object> getSession() {
+		return session;
+	}
+
+	public void setSession(Map<String, Object> session) {
+		this.session = session;
+	}
+
 	public String getId() {
 		return id;
 	}
@@ -80,33 +100,20 @@ public class AccessoryManagerAction extends ActionSupport implements
 		this.key = key;
 	}
 
-	public Map<String, Object> getSession() {
-        return session;
-    }
-	
-    public void setSession(Map<String, Object> session) {
-        this.session = session;
-    }
-
-	public SupplierService getSupservice() {
-		return supservice;
-	}
-
-	public void setSupservice(SupplierService supservice) {
-		this.supservice = supservice;
-	}
-
+	//获取所有配件信息
 	public String getAllAc() {
 		aclist = service.getAllAc();
 		suplist = supservice.SelectSupplier();
 		return SUCCESS;
 	}
 	
+	//查询配件信息
 	public String getAc() {
 		aclist = service.getAc(key);
 		return SUCCESS;
 	}
 	
+	//通过ID查询一个配件
 	public String getOneAc() {
 		HttpServletRequest request=ServletActionContext.getRequest();
 		id = request.getParameter("id");
@@ -115,11 +122,13 @@ public class AccessoryManagerAction extends ActionSupport implements
 		return SUCCESS;
 	}
 
+	//新增配件
 	public String addAc() {
 		service.addAc(goods);
 		return SUCCESS;
 	}
 
+	//删除配件
 	public String deleteAc() {
 		HttpServletRequest request=ServletActionContext.getRequest();
 		id = request.getParameter("id");
@@ -128,6 +137,7 @@ public class AccessoryManagerAction extends ActionSupport implements
 		return SUCCESS;
 	}
 
+	//修改配件信息
 	public String modifyAc() {
 		service.modifyAc(goods);
 		return SUCCESS;

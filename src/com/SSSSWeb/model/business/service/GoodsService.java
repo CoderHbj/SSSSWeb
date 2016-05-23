@@ -33,12 +33,6 @@ public class GoodsService {
 		this.stockDAO = stockDAO;
 	}
 
-//	@Transactional
-//	public int PageNum(int pageSize, String value) {
-//		int pageNum = goodsDAO.PageNum(pageSize, value);
-//		return pageNum;
-//	}
-
 	@Transactional
 	public ArrayList<GoodsDetial> SelectGoods(String chn_name) {
 		ArrayList su = goodsDAO.SelectGoods(chn_name);
@@ -148,6 +142,7 @@ public class GoodsService {
 		return reslist;
 	}
 	
+	//通过ID查询一个配件
 	public GoodsDetial getOneAc(int id){
 		GOODS_INF ac = goodsDAO.getGoodsById(id);
 		STOCK_INF stock = stockDAO.getStockByGoodsId(id);

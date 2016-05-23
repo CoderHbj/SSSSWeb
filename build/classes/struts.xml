@@ -97,6 +97,23 @@
 			</result>
      	</action>
      	
+     	<!-- SubList -->
+     	<action name="getSubList" class="AcSaleManagerAction" method="getSubList">
+     		<result>/selectUncheckedSubList.jsp</result>
+     	</action>
+     	<action name="checkSubList" class="AcSaleManagerAction" method="checkSubList">
+     		<result type="chain">
+				<param name="namespace">/</param>
+				<param name="actionName">getSubList</param>
+			</result>
+     	</action>
+     	<action name="addIndent" class="AcSaleManagerAction" method="addIndent">
+     		<result type="chain">
+				<param name="namespace">/</param>
+				<param name="actionName">getSubList</param>
+			</result>
+     	</action>
+     	
      	<!-- Orders -->
      	<action name="ishopCart" class="ishopCart">
      		<result>/detial.jsp</result>
@@ -106,6 +123,22 @@
      	</action>
      	<action name="sOrdersA" class="sOrdersA">
      		<result>/order.jsp</result>
+     	</action>
+     	
+     	<action name="getSaleList" class="AcSaleManagerAction" method="getUncheckedSaleList">
+     		<result>/selectUncheckedSaleList.jsp</result>
+     	</action>
+     	<action name="checkSaleList" class="AcSaleManagerAction" method="checkSaleList">
+     		<result type="chain">
+				<param name="namespace">/</param>
+				<param name="actionName">getSaleList</param>
+			</result>
+     	</action>
+     	<action name="cancelSaleList" class="AcSaleManagerAction" method="cancelSale">
+     		<result type="chain">
+				<param name="namespace">/</param>
+				<param name="actionName">getSaleList</param>
+			</result>
      	</action>
      	
      	

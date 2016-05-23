@@ -1,19 +1,17 @@
 package com.SSSSWeb.model.business.service;
 
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.text.ParseException;
-import org.springframework.transaction.annotation.Transactional;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
+import org.springframework.transaction.annotation.Transactional;
 
 import com.SSSSWeb.model.business.dao.OrdersDAO;
 import com.SSSSWeb.model.domain.Customer;
 import com.SSSSWeb.model.domain.Orders;
 import com.SSSSWeb.model.domain.Orders_Count;
 import com.SSSSWeb.model.domain.Orders_Info;
+import com.SSSSWeb.model.domain.Orders_List;
 
 
 
@@ -33,8 +31,6 @@ public class OrdersService {
 		ordersDAO.InsertShopCart(c,id,num);
 	}
 
-
-	
 	@Transactional
 	public ArrayList<Orders_Count> SelectCount(Customer c) {
 		ArrayList list=ordersDAO.SelectCount(c);
@@ -120,6 +116,41 @@ public class OrdersService {
 		return o;
 	}
 
+	//获取待审核订单
+	@Transactional
+	public ArrayList<Orders_Info> getUncheckedOrders() throws ParseException{
+		ArrayList or=ordersDAO.getUncheckedOrders();
+		ArrayList reslist = new ArrayList();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		for(int i=0;i<or.size();i++){
+			Object[] obj = (Object[]) or.get(i);
+			Orders_Info to = new Orders_Info();
+			to.setOrder_id(Integer.valueOf(obj[0].toString()));
+			to.setOrder_state(obj[1].toString());
+			to.setCustomer_id(Integer.valueOf(obj[2].toString()));
+			to.setOrder_list_id(Integer.valueOf(obj[3].toString()));
+			to.setId(Integer.valueOf(obj[4].toString()));
+			to.setNum(Integer.valueOf(obj[5].toString()));
+			to.setCode(obj[6].toString());
+			to.setChn_name(obj[7].toString());
+			to.setEng_name(obj[8].toString());
+			to.setColor(obj[9].toString());
+			to.setPrice(Integer.valueOf(obj[10].toString()));
+			reslist.add(to);
+		}
+		return reslist;
+	}
 	
+	//审核订单
+	@Transactional
+	public void checkOrders(int id){
+		ordersDAO.checkOrders(id);
+	}
+	
+	//取消订单
+	@Transactional
+	public void cancelSale(int id){
+		ordersDAO.cancelSale(id);
+	}
 
 }

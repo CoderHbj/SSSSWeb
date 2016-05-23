@@ -58,10 +58,10 @@
 		<div class="row">
 			<div class="col-sm-3 col-md-2 sidebar">
 				<ul class="nav nav-sidebar ">
-					<li class="active"><a href="getAllAc">配件管理 </a></li>
+					<li><a href="getAllAc">配件管理 </a></li>
 					<li><a href="#">Reports</a></li>
 					<li><a href="getSaleList">销售单审核</a></li>
-					<li><a href="getSubList">订货单签收</a></li>
+					<li class="active"><a href="getSubList">订货单签收</a></li>
 				</ul>
 				<ul class="nav nav-sidebar">
 					<li><a href="">Nav item</a></li>
@@ -77,11 +77,11 @@
 				</c:if>
 			</div>
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-				<h1 class="page-header">配件列表</h1>
+				<h1 class="page-header">订货单</h1>
 				<div class="col-md-11 col-md-offset-11">
 					<button class="btn btn-success" data-toggle="modal"
 						data-target="#addModal" role="button">
-						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加配件
+						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>填写订货单
 					</button>
 				</div>
 				<table class="table table-hover piece" style="margin-left: 0;">
@@ -90,34 +90,22 @@
 							<th>编码</th>
 							<th>中文名称</th>
 							<th>英文名称</th>
-							<th>规格</th>
-							<th>产地</th>
-							<th>品牌</th>
 							<th>供应商</th>
-							<th>单价</th>
-							<th>库存数量</th>
-							<th>编辑用户</th>
-							<th>删除用户</th>
+							<th>数量</th>
+							<th>签收</th>
 						</tr>
 					</thead>
 					<tbody>
-						<s:iterator value="aclist" var="ac">
+						<s:iterator value="uncheckedSubList" var="sub">
 							<tr>
-								<td><s:property value="#ac.code" /></td>
-								<td><s:property value="#ac.chn_name" /></td>
-								<td><s:property value="#ac.eng_name" /></td>
-								<td><s:property value="#ac.standard" /></td>
-								<td><s:property value="#ac.place" /></td>
-								<td><s:property value="#ac.brand" /></td>
-								<td><s:property value="#ac.provider" /></td>
-								<td><s:property value="#ac.price" /></td>
-								<td><s:property value="#ac.quantity" /></td>
-								<td><a href="javascript:void(0);" class="btn btn-warning"
-									id="modifyButton" rel="${id}" role="button"><span
-										class="glyphicon glyphicon-cog" aria-hidden="true"></span>修改资料</a></td>
-								<td><a href="deleteAc?id=${id}" class="btn btn-danger"
-									role="button"><span class="glyphicon glyphicon-trash"
-										aria-hidden="true"></span>删除配件</a></td>
+								<td><s:property value="#sub.code" /></td>
+								<td><s:property value="#sub.chn_name" /></td>
+								<td><s:property value="#sub.eng_name" /></td>
+								<td><s:property value="#sub.supplier_name" /></td>
+								<td><s:property value="#sub.quantity" /></td>
+								<td><a href="checkSubList?id=${id}" class="btn btn-warning"
+									role="button"><span class="glyphicon glyphicon-cog"
+										aria-hidden="true"></span>签收</a></td>
 							</tr>
 						</s:iterator>
 					</tbody>
@@ -135,56 +123,19 @@
 						aria-hidden="true">&times;</button>
 					<h4 class="modal-title" id="myModalLabel">添加配件</h4>
 				</div>
-				<form action="addAc" method="post" id="addForm">
+				<form action="addIndent" method="post" id="addForm">
 					<div class="modal-body">
 						<div class="form-group">
-							<label for="code">编码</label> <input type="text"
-								class="form-control" id="code" name="code" />
-						</div>
-						<div class="form-group">
-							<label for="chn_name">中文名称</label> <input type="text"
-								class="form-control" id="chn_name" name="chn_name" />
-						</div>
-						<div class="form-group">
-							<label for="eng_name">英文名称</label> <input type="text"
-								class="form-control" id="eng_name" name="eng_name" />
-						</div>
-						<div class="form-group">
-							<label for="standard">规格</label> <input type="text"
-								class="form-control" id="standard" name="standard" />
-						</div>
-						<div class="form-group">
-							<label for="place">产地</label> <input type="text"
-								class="form-control" id="place" name="place" />
-						</div>
-						<div class="form-group">
-							<label for="brand">品牌</label>
-							<!--<input type="text" class="form-control" id="brand" name="brand" />-->
-							<select class="form-control" id="brand" name="brand">
-								<option value="道奇">道奇</option>
-								<option value="米其林">米其林</option>
-								<option value="三菱">三菱</option>
-							</select>
-						</div>
-						<div class="form-group">
-							<label for="provider">供应商</label> <select class="form-control"
-								id="provider" name="provider">
-								<s:iterator value="suplist" var="sup">
-									<option value="<s:property value="#sup.supplier_id" />"><s:property
-											value="#sup.supplier_name" /></option>
+							<label for="goods_id">配件</label> <select class="form-control"
+								id="goods_id" name="goods_id">
+								<s:iterator value="aclist" var="ac">
+									<option value="<s:property value="#ac.id" />"><s:property
+											value="#ac.chn_name" /></option>
 								</s:iterator>
 							</select>
 						</div>
 						<div class="form-group">
-							<label for="provider">单价</label> <input type="text"
-								class="form-control" id="price" name="price" />
-						</div>
-						<div class="form-group">
-							<label for="provider">描述</label> <input type="text"
-								class="form-control" id="text" name="text" />
-						</div>
-						<div class="form-group">
-							<label for="price">库存</label> <input type="text"
+							<label for="quantity">数量</label> <input type="text"
 								class="form-control" id="quantity" name="quantity" />
 						</div>
 					</div>
@@ -331,7 +282,7 @@
 							function() {
 								var id = $(this).attr('rel');
 								$("#myModal .modal-content > form").attr(
-										"action", "modifyAc?id=" + id);
+										"action", "getOneAc?id=" + id);
 								$("#myModal").modal();
 							});
 					$('#addForm').bootstrapValidator({

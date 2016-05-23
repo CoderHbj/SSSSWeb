@@ -12,9 +12,7 @@ import com.SSSSWeb.model.domain.GoodsDetial;
 import com.SSSSWeb.model.domain.STOCK_INF;
 
 public class GoodsDAO {
-
-	private static int DONE = 1;
-	private static int FAIL = 0;
+	
 	private SessionFactory sf;
 
 	public SessionFactory getSf() {
