@@ -134,7 +134,7 @@ public class AcSaleManagerAction extends ActionSupport implements SessionAware{
 	
 	//获取所有未签收订货单
 	public String getSubList(){
-		aclist = goodsService.getAllAc();
+		aclist = goodsService.getAllAc_2();
 		uncheckedSubList = indentService.getUncheckedSubList();
 		return SUCCESS;
 	}

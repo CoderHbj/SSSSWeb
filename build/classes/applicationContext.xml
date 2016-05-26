@@ -33,6 +33,8 @@
         		<value>com.SSSSWeb.model.domain.Orders_Info</value>
         		<value>com.SSSSWeb.model.domain.Indent</value>
         		<value>com.SSSSWeb.model.domain.UncheckedSubList</value>
+        		<value>com.SSSSWeb.model.domain.Color</value>
+        		<value>com.SSSSWeb.model.domain.AC_STANDARD_INF</value>
     		</list>
   		</property>
   		
@@ -102,6 +104,12 @@
 	
 	
 	<!-- Goods -->
+	<bean id="colorsDAO" class="com.SSSSWeb.model.business.dao.ColorsDAO">
+		<property name="sf" ref="sessionFactory"></property>
+	</bean>
+	<bean id="colorsService" class="com.SSSSWeb.model.business.service.ColorsService">
+		<property name="colorsDAO" ref="colorsDAO"></property>
+	</bean>
 	<bean id="goodsDAO" class="com.SSSSWeb.model.business.dao.GoodsDAO">
 		<property name="sf" ref="sessionFactory"></property>
 	</bean>
@@ -118,11 +126,23 @@
 	<bean id="sDetialGoodsA" class="com.SSSSWeb.control.SelectDetialCoodsAction">
 		<property name="gs" ref="goodsService"></property>
 	</bean>
+	
+	<bean id="standardDAO" class="com.SSSSWeb.model.business.dao.StandardDAO">
+		<property name="sf" ref="sessionFactory"></property>
+	</bean>
+	<bean id="standardService" class="com.SSSSWeb.model.business.service.StandardService">
+		<property name="standardDAO" ref="standardDAO"></property>
+	</bean>
 	<bean id="AccessoryManagerAction" class="com.SSSSWeb.control.AccessoryManagerAction">
 		<property name="service" ref="goodsService"></property>
 		<property name="supservice" ref="supplierService"></property>
+		<property name="standardService" ref="standardService"></property>
 	</bean>
-	
+	<bean id="CarManagerAction" class="com.SSSSWeb.control.CarManagerAction">
+		<property name="service" ref="goodsService"></property>
+		<property name="colorsservice" ref="colorsService"></property>
+		<property name="supservice" ref="supplierService"></property>
+	</bean>
 	<!-- SubList -->
 	<bean id="indentDAO" class="com.SSSSWeb.model.business.dao.IndentDAO">
 		<property name="sf" ref="sessionFactory"></property>

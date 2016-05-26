@@ -59,7 +59,7 @@
 			<div class="col-sm-3 col-md-2 sidebar">
 				<ul class="nav nav-sidebar ">
 					<li><a href="getAllAc">配件管理 </a></li>
-					<li><a href="#">Reports</a></li>
+					<li><a href="SelectAllCar">车辆管理</a></li>
 					<li><a href="getSaleList">销售单审核</a></li>
 					<li class="active"><a href="getSubList">订货单签收</a></li>
 				</ul>
@@ -103,9 +103,8 @@
 								<td><s:property value="#sub.eng_name" /></td>
 								<td><s:property value="#sub.supplier_name" /></td>
 								<td><s:property value="#sub.quantity" /></td>
-								<td><a href="checkSubList?id=${id}" class="btn btn-warning"
-									role="button"><span class="glyphicon glyphicon-cog"
-										aria-hidden="true"></span>签收</a></td>
+								<td><a href="checkSubList?id=${id}" class="btn btn-primary"
+									role="button">签收</a></td>
 							</tr>
 						</s:iterator>
 					</tbody>

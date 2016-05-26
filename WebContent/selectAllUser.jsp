@@ -56,7 +56,7 @@
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar ">
             <li><a href="getAllAc">配件管理 <span class="sr-only">(current)</span></a></li>
-            <li><a href="#">Reports</a></li>
+            <li><a href="SelectAllCar">车辆管理</a></li>
             <li><a href="getSaleList">销售单审核</a></li>
             <li><a href="getSubList">订货单签收</a></li>
           </ul>

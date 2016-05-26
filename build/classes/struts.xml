@@ -97,6 +97,35 @@
 			</result>
      	</action>
      	
+     	<action name="SelectAllCar" class="CarManagerAction" method="SelectAllCar">
+			<result>/selectAllCar.jsp</result>
+		</action>
+		<action name="SelectCar" class="CarManagerAction" method="SelectCar">
+			<result>/selectCar.jsp</result>
+		</action>
+		<action name="UpdateCar" class="CarManagerAction" method="UpdateCar">
+			<result type="chain">
+				<param name="namespace">/</param>
+				<param name="actionName">getAllCar</param>
+			</result>
+		</action>
+     	<action name="AddCar" class="CarManagerAction" method="AddCar">
+     		<result type="chain">
+				<param name="namespace">/</param>
+				<param name="actionName">SelectAllCar</param>
+			</result>
+     	</action>
+     	<action name="DeleteCar" class="CarManagerAction" method="DeleteCar">
+     		<result type="chain">
+				<param name="namespace">/</param>
+				<param name="actionName">SelectAllCar</param>
+			</result>
+     	</action>
+		<action name="SelectCarByID" class="CarManagerAction" method="SelectCarByID">
+			<result>/selectAllCar.jsp</result>
+		</action>
+     	
+     	
      	<!-- SubList -->
      	<action name="getSubList" class="AcSaleManagerAction" method="getSubList">
      		<result>/selectUncheckedSubList.jsp</result>

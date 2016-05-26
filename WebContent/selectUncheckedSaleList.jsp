@@ -59,7 +59,7 @@
 			<div class="col-sm-3 col-md-2 sidebar">
 				<ul class="nav nav-sidebar ">
 					<li><a href="getAllAc">配件管理 </a></li>
-					<li><a href="#">Reports</a></li>
+					<li><a href="SelectAllCar">车辆管理</a></li>
 					<li class="active"><a href="getSaleList">销售单审核</a></li>
 					<li><a href="getSubList">订货单签收</a></li>
 				</ul>
@@ -101,12 +101,9 @@
 								<td><s:property value="#uc.num" /></td>
 								<td><s:property value="#uc.order_state" /></td>
 								<td><a href="checkSaleList?id=${order_id}"
-									class="btn btn-warning" id="modifyButton" rel="${order_id}"
-									role="button"><span class="glyphicon glyphicon-cog"
-										aria-hidden="true"></span>审核</a></td>
-								<td><a href="cancelSaleList?id=${order_id}" class="btn btn-danger"
-									role="button"><span class="glyphicon glyphicon-trash"
-										aria-hidden="true"></span>取消订单</a></td>
+									class="btn btn-primary" id="modifyButton" role="button">审核</a></td>
+								<td><a href="cancelSaleList?id=${order_id}"
+									class="btn btn-danger" role="button">取消订单</a></td>
 							</tr>
 						</s:iterator>
 					</tbody>

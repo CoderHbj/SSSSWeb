@@ -59,7 +59,7 @@
 			<div class="col-sm-3 col-md-2 sidebar">
 				<ul class="nav nav-sidebar ">
 					<li class="active"><a href="getAllAc">配件管理 </a></li>
-					<li><a href="#">Reports</a></li>
+					<li><a href="SelectAllCar">车辆管理</a></li>
 					<li><a href="getSaleList">销售单审核</a></li>
 					<li><a href="getSubList">订货单签收</a></li>
 				</ul>
@@ -122,6 +122,34 @@
 						</s:iterator>
 					</tbody>
 				</table>
+				<s:url id="url_pre" value="getAllAc">
+					<s:param name="pageNow" value="pageNow-1"></s:param>
+				</s:url>
+
+				<s:url id="url_next" value="getAllAc">
+					<s:param name="pageNow" value="pageNow+1"></s:param>
+				</s:url>
+
+				<s:if test="%{pageNow!=1}">
+					<s:a href="%{url_pre}" class="btn btn-primary btn-lg" role="button">上一页</s:a>
+				</s:if>
+				<s:else>
+					<s:a href="%{url_pre}" class="btn btn-primary btn-lg disabled"
+						role="button">上一页</s:a>
+				</s:else>
+				<s:iterator value="aclist" status="status">
+					<s:url id="url" value="getAllAc">
+						<s:param name="pageNow" value="pageNow" />
+					</s:url>
+				</s:iterator>
+				<s:if test="%{pageNum>pageNow}">
+					<s:a href="%{url_next}" class="btn btn-primary btn-lg"
+						role="button">下一页</s:a>
+				</s:if>
+				<s:else>
+					<s:a href="%{url_next}" class="btn btn-primary btn-lg disabled"
+						role="button">下一页</s:a>
+				</s:else>
 			</div>
 		</div>
 	</div>
@@ -150,8 +178,13 @@
 								class="form-control" id="eng_name" name="eng_name" />
 						</div>
 						<div class="form-group">
-							<label for="standard">规格</label> <input type="text"
-								class="form-control" id="standard" name="standard" />
+							<label for="standard">规格</label>
+							<select class="form-control" id="standard" name="standard">
+							<s:iterator value="standardlist" var="st">
+								<option value="<s:property value="#st.standard" />"><s:property
+										value="#st.standard" /></option>
+							</s:iterator>
+							</select>
 						</div>
 						<div class="form-group">
 							<label for="place">产地</label> <input type="text"
@@ -210,24 +243,29 @@
 				</div>
 				<form action="modifyAc" method="post" id="changeForm">
 					<div class="modal-body">
-						<input type="hidden" value="${id }" />
+						<input type="hidden" value="" />
 						<div class="form-group">
 							<label for="code">编码</label> <input type="text"
 								class="form-control" id="code" name="code"
-								value="<s:property value="#goods.code"/>" />
+								value="<s:property value="#good.code" />" />
 						</div>
 						<div class="form-group">
 							<label for="chn_name">中文名称</label> <input type="text"
 								class="form-control" id="chn_name" name="chn_name"
-								value="<s:property value="#goods.code"/>" />
+								value="<s:property value=""/>" />
 						</div>
 						<div class="form-group">
 							<label for="eng_name">英文名称</label> <input type="text"
 								class="form-control" id="eng_name" name="eng_name" />
 						</div>
 						<div class="form-group">
-							<label for="standard">规格</label> <input type="text"
-								class="form-control" id="standard" name="standard" />
+							<label for="standard">规格</label>
+							<select class="form-control" id="standard" name="standard">
+							<s:iterator value="standardlist" var="st">
+								<option value="<s:property value="#st.standard" />"><s:property
+										value="#st.standard" /></option>
+							</s:iterator>
+							</select>
 						</div>
 						<div class="form-group">
 							<label for="place">产地</label> <input type="text"
@@ -342,16 +380,11 @@
 							validating : 'glyphicon glyphicon-refresh'
 						},
 						fields : {
-							username : {
-								message : 'The username is not valid',
+							code : {
+								message : 'The code is not valid',
 								validators : {
 									notEmpty : {
-										message : '姓名不能为空'
-									},
-									stringLength : {
-										min : 1,
-										max : 8,
-										message : '姓名长度必须小于8'
+										message : '编码不能为空'
 									},
 									regexp : {
 										regexp : /^[A-Za-z\u4e00-\u9fa5]+$/,
@@ -359,25 +392,49 @@
 									}
 								}
 							},
-							password : {
+							chn_name : {
+								message : 'The chn_name is not valid',
 								validators : {
 									notEmpty : {
-										message : '密码不能为空'
-									},
-									stringLength : {
-										min : 1,
-										max : 10,
-										message : '密码长度必须小于8位'
-									},
+										message : '名称不能为空'
+									}
 								}
 							},
-							phonenum : {
-								message : 'The phonenum is not valid',
+							eng_name : {
+								message : 'The eng_name is not valid',
 								validators : {
 									stringLength : {
 										min : 11,
 										max : 11,
-										message : '长度必须为11位'
+										message : '名称不能为空'
+									},
+									regexp : {
+										regexp : /^[0-9]+$/,
+										message : '含有非法字符'
+									}
+								}
+							},
+							price : {
+								message : 'The price is not valid',
+								validators : {
+									stringLength : {
+										min : 11,
+										max : 11,
+										message : '单价不能为空'
+									},
+									regexp : {
+										regexp : /^[0-9]+$/,
+										message : '含有非法字符'
+									}
+								}
+							},
+							quantity : {
+								message : 'The quantity is not valid',
+								validators : {
+									stringLength : {
+										min : 11,
+										max : 11,
+										message : '库存不能为空'
 									},
 									regexp : {
 										regexp : /^[0-9]+$/,
