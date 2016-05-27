@@ -64,6 +64,7 @@
 						<input type="text" class="form-control" name="chn_name"
 							placeholder="Search">
 					</div>
+					<input type="hidden" name="remark" value="0">
 					<button type="submit" class="btn btn-danger">搜索</button>
 				</form>
 				<ul class="nav navbar-nav navbar-right">

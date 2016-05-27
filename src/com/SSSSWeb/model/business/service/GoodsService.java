@@ -24,9 +24,9 @@ public class GoodsService {
 	}
 	
 	@Transactional
-	public ArrayList<GoodsDetial> SelectGoods(String chn_name) {
+	public ArrayList<GoodsDetial> SelectGoods(String chn_name,int remark) {
 		
-			ArrayList su=goodsDAO.SelectGoods(chn_name);
+			ArrayList su=goodsDAO.SelectGoods(chn_name,remark);
 			ArrayList reslist = new ArrayList();
 			for(int i=0;i<su.size();i++){
 				Object[] obj = (Object[]) su.get(i);

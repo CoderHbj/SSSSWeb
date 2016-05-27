@@ -9,6 +9,7 @@ public class SelectGoodsAction extends ActionSupport {
 	private GoodsService gs;
 	private String chn_name;
 	private List list;
+	private int remark;
 	public List getList() {
 		return list;
 	}
@@ -33,9 +34,17 @@ public class SelectGoodsAction extends ActionSupport {
 		this.gs = gs;
 	}
 
+	public int getRemark() {
+		return remark;
+	}
+
+	public void setRemark(int remark) {
+		this.remark = remark;
+	}
+
 	@Override
 	public String execute() throws Exception {
-		list=gs.SelectGoods(chn_name);
+		list=gs.SelectGoods(chn_name,remark);
 		return "success";
 	}
 }

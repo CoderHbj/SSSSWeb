@@ -82,7 +82,7 @@ public class OrdersDAO {
 		Session session = sf.openSession();
 		String hql="select distinct o.order_id,o.order_time,o.send_time,o.settle_time,o.order_state,o.customer_id,t.order_list_id,t.id,t.num,g.code,g.chn_name,g.eng_name,g.color,g.price,c.url,s.quantity " +
 				" from Orders o,Orders_List t, GOODS_INF g, CAR_IMG_INF c ,STOCK_INF s " +
-				" where o.order_id=t.order_id and g.id=t.id and c.goods_id=g.id and s.goods_id=g.id and o.customer_id =" + c.getCustomer_id() +" and c.level = 1 and o.order_state!= '购物车'  group by t.order_list_id";
+				" where o.order_id=t.order_id and g.id=t.id and c.goods_id=g.id and s.goods_id=g.id and o.customer_id =" + c.getCustomer_id() +" and c.level = 1 and o.order_state!= '购物车' ";
 		Query query = session.createQuery(hql);
 		ArrayList resultList = (ArrayList) query.list();
 		session.close();
@@ -93,7 +93,7 @@ public class OrdersDAO {
 		Session session = sf.openSession();
 		String hql="select distinct o.order_id,o.order_time,o.send_time,o.settle_time,o.order_state,o.customer_id,t.order_list_id,t.id,t.num,g.code,g.chn_name,g.eng_name,g.color,g.price,c.url,s.quantity " +
 				" from Orders o,Orders_List t, GOODS_INF g, CAR_IMG_INF c ,STOCK_INF s " +
-				" where o.order_id=t.order_id and g.id=t.id and c.goods_id=g.id and o.customer_id = " + c.getCustomer_id() +" and c.level = 1 and o.order_state= '购物车' and s.goods_id=g.id group by t.order_list_id";
+				" where o.order_id=t.order_id and g.id=t.id and c.goods_id=g.id and o.customer_id = " + c.getCustomer_id() +" and c.level = 1 and o.order_state= '购物车' and s.goods_id=g.id ";
 		Query query = session.createQuery(hql);
 		ArrayList resultList = (ArrayList) query.list();
 		session.close();
