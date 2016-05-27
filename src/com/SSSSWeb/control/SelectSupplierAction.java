@@ -58,7 +58,7 @@ public class SelectSupplierAction extends ActionSupport{
 	@Override
 	public String execute() throws Exception {
 		HttpServletResponse hsr = ServletActionContext.getResponse();
-		int i=1;
+		int i=5;
 		int count = sp.selectCount();
 		if(count%i==0){
 			pagecount = count/i;

@@ -17,7 +17,7 @@
 	.top a {
 	color: #666;
 	}
-	.top .btn-success, .top .btn-danger {
+	.top .btn-primary, .top .btn-warning {
 	color: #fff;
 	}
 .img {
@@ -104,7 +104,7 @@
 						data-toggle="tab">所有订单</a></li>
 					<li><a href="#tab-send" role="tab" data-toggle="tab">待发货</a></li>
 					<li><a href="#tab-sended" role="tab" data-toggle="tab">已发货</a></li>
-					<li><a href="#tab-success" role="tab" data-toggle="tab">交易成功</a></li>
+					<li><a href="#tab-primary" role="tab" data-toggle="tab">交易成功</a></li>
 					<li><a href="#tab-false" role="tab" data-toggle="tab">交易失败</a></li>
 				</ul>
 				<hr class="feature-divider">
@@ -176,12 +176,12 @@
 															<s:if test='#z.order_state == "待发货"'>
 																<td rowspan="<s:property value="#z.count" />"><a
 																	href="rOrdersA?order_id=<s:property value="#u.order_id" />"
-																	class="btn btn-danger">取消订单</a></td>
+																	class="btn btn-warning">取消订单</a></td>
 															</s:if>
 															<s:elseif test='#z.order_state == "已发货"'>
 																<td rowspan="<s:property value="#z.count" />"><a
 																	href="suOrdersA?order_id=<s:property value="#u.order_id" />"
-																	class="btn btn-success">确认收货</a></td>
+																	class="btn btn-primary">确认收货</a></td>
 															</s:elseif>
 															<s:elseif test='#z.order_state == "交易成功"'>
 																<td rowspan="<s:property value="#z.count" />">交易成功</td>
@@ -279,7 +279,7 @@
 																		value="#z.order_state" /></td>
 																<td rowspan="<s:property value="#z.count" />"><a
 																	href="rOrdersA?order_id=<s:property value="#u.order_id" />"
-																	class="btn btn-danger">取消订单</a></td>
+																	class="btn btn-warning">取消订单</a></td>
 
 															</tr>
 														</s:if>
@@ -371,7 +371,7 @@
 
 																<td rowspan="<s:property value="#z.count" />"><a
 																	href="suOrdersA?order_id=<s:property value="#u.order_id" />"
-																	class="btn btn-success">确认收货</a></td>
+																	class="btn btn-primary">确认收货</a></td>
 
 															</tr>
 														</s:if>

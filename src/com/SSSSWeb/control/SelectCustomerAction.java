@@ -56,7 +56,7 @@ public class SelectCustomerAction extends ActionSupport{
 	@Override
 	public String execute() throws Exception {
 		HttpServletResponse hsr = ServletActionContext.getResponse();
-		int i=1;
+		int i=5;
 		int count = cs.selectCount();  
 		if(count%i==0){
 			pagecount = count/i;

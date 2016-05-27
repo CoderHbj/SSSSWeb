@@ -66,11 +66,31 @@
             <li><a href="">Another nav item</a></li>
             <li><a href="">More navigation</a></li>
           </ul>
+          
+          
+          
+          
           <c:if test='${session.user.post eq "管理员"}'>
           <ul class="nav nav-sidebar">
             <li><a href="selectAllUser" >员工操作</a></li>
           </ul>
           </c:if>
+          
+          
+          <c:if test='${session.user.post eq "仓库管理员"}'>
+          <ul class="nav nav-sidebar">
+            <li><a href="ssupplierA?page=0" >供应商</a></li>
+          </ul>
+          </c:if>
+          
+           <c:if test='${session.user.post eq "客户"}'>
+          <ul class="nav nav-sidebar">
+            <li><a href="sACA?page=0" >客户</a></li>
+          </ul>
+          </c:if>
+          
+          
+          
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Dashboard</h1>

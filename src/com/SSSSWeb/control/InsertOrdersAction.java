@@ -2,9 +2,7 @@ package com.SSSSWeb.control;
 
 import java.util.Map;
 
-
 import javax.servlet.http.HttpServletResponse;
-
 
 import net.sf.json.JSONArray;
 
@@ -16,11 +14,10 @@ import com.SSSSWeb.model.domain.Customer;
 import com.SSSSWeb.model.domain.Orders;
 import com.opensymphony.xwork2.ActionSupport;
 
-public class InsertOrdersAction extends ActionSupport implements SessionAware{
+public class InsertOrdersAction extends ActionSupport implements SessionAware {
 	private OrdersService os;
 	private Map<String, Object> session;
 	private String Alldata;
-	
 
 	public void setOs(OrdersService os) {
 		this.os = os;
@@ -42,24 +39,25 @@ public class InsertOrdersAction extends ActionSupport implements SessionAware{
 		Alldata = alldata;
 	}
 
-	
 	@Override
 	public String execute() throws Exception {
 		HttpServletResponse hsr = ServletActionContext.getResponse();
-		Customer c=(Customer)session.get("customer");
+		Customer c = (Customer) session.get("customer");
 		Orders o = os.InsertOrders(c);
 		JSONArray json = JSONArray.fromObject(Alldata);
-		if(json.size()>0){
-			  for(int i=0;i<json.size();i++) {
-			    os.InsertOrdersList(o,Integer.parseInt(json.getJSONObject(i).getString("id")),Integer.parseInt(json.getJSONObject(i).getString("num")),Integer.parseInt(json.getJSONObject(i).getString("order_list_id")));
-			  }
+		if (json.size() > 0) {
+			for (int i = 0; i < json.size(); i++) {
+				os.InsertOrdersList(o, Integer.parseInt(json.getJSONObject(i)
+						.getString("id")), Integer.parseInt(json.getJSONObject(
+						i).getString("num")), Integer.parseInt(json
+						.getJSONObject(i).getString("order_list_id")));
 			}
-		
+		}
+
 		hsr.setCharacterEncoding("UTF-8");
-        hsr.getWriter().write("");
-		
+		hsr.getWriter().write("");
+
 		return "success";
 	}
-	
-	
+
 }

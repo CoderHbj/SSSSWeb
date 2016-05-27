@@ -1,9 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib uri="/struts-tags" prefix="s" %>
-<%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +17,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             overflow: hidden;
             padding: 0 25px 15px 25px;
             background: #444;
-            background: rgba(0, 0, 0, 0.35);
+            background: rgba(0, 0, 0, 0.5);
     -       moz-border-radius: 4px 4px 0 0; -webkit-border-radius: 4px 4px 0 0; border-radius: 4px 4px 0 0;
             text-align: left;
 		}
@@ -99,7 +96,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <form action="login" method="post" class="form-signin" role="form">
             <h2 class="form-signin-heading">用户登录</h2>
             <s:actionmessage/>
-            <s:property value="#session.customer" />
             <input type="text" class="form-control text" name="customer_no"  autocomplete="off" style="ime-mode:disabled" placeholder="请输入用户名" required autofocus>
             <input type="password" class="form-control text" name="customer_password"  autocomplete="off" placeholder="请输入密码" required>
             <button class='btn btn-lg btn-primary btn-block' type='submit'>登录</button>
@@ -180,7 +176,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script src="js/bootstrap.min.js"></script>
 <script >
 $(function(){
-    $.backstretch("image/1.jpg");
+    $.backstretch("image/123.jpg");
 
 	$('#myMo').modal({
  		show: false,
@@ -204,8 +200,8 @@ $(function(){
                     },
                     stringLength: {
                         min: 4,
-                        max: 30,
-                        message: '用户名最少4位，最大30为'
+                        max: 20,
+                        message: '用户名最少4位，最大20为'
                     }
                 }
             },
@@ -216,8 +212,8 @@ $(function(){
                     },
                     stringLength: {
                         min: 4,
-                        max: 30,
-                        message: '密码最少4位，最大30位'
+                        max: 20,
+                        message: '密码最少4位，最大20位'
                     }
                 }
             },
